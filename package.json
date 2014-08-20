@@ -1,11 +1,11 @@
 {
   "name": "bespoke-theme-fancy",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A fancy, sassy styled theme for Bespoke.js",
   "homepage": "https://github.com/fegemo/bespoke-theme-fancy",
   "bugs": "https://github.com/fegemo/bespoke-theme-fancy/issues",
   "author": {
-    "name": "Flávio",
+    "name": "Flávio Coutinho",
     "url": "https://github.com/fegemo",
     "email": "fegemo@gmail.com"
   },
