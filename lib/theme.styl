@@ -1,0 +1,162 @@
+// Bespoke Classes: https://github.com/markdalgleish/bespoke-classes
+// Stylus: http://learnboost.github.io/stylus
+
+@import url('http://fonts.googleapis.com/css?family=Calligraffitti|Open+Sans:400italic,700italic,400,700')
+@import 'normalizecss/normalize.css'
+
+$font-family-serif = 'Calligraffitti', cursive
+$font-family-sans = 'Open Sans', Fuse-Segoe-UI, helvetica, arial, sans-serif;
+
+$slide-width = 640px
+$slide-height= 480px
+$presentation-color = rgb(215, 215, 250)
+$accent-color = rgb(252, 73, 216)
+$link-color = rgb(182, 108, 126)
+
+.bespoke-parent
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  background-color $presentation-color
+
+.bespoke-scale-parent
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  bottom: 0
+  pointer-events: none
+  .bespoke-active
+    pointer-events: auto
+
+.bespoke-slide
+  width: $slide-width
+  height: $slide-height
+  position: absolute
+  top: 50%
+  left: 50%
+  margin-left: -(@width / 2)
+  margin-top: -(@height / 2)
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.bespoke-inactive
+  opacity: 0
+  pointer-events: none
+
+.bespoke-bullet
+  opacity 1
+  transform tranlsate3d(0, 0, 0)
+  transition all 0.4s ease
+
+.bespoke-bullet-inactive
+  opacity: 0
+  pointer-events: none
+  transform translate3d(40px, 0, 0)
+  transition all 0.2s ease
+
+.emphatic
+  background #A6B0FF
+  color white
+  h1, h2, h3, h4, h5, h6
+    color rgb(67, 19, 128)
+
+.bespoke-progress-parent
+  position: absolute
+  top: 0
+  left: 0
+  right: 0
+  height: .2vw
+
+.bespoke-progress-bar
+  position absolute
+  height 100%
+  transition width .6s ease
+  &:before
+  &:after
+    content ""
+    position absolute
+    display block
+    width 100%
+    height 50%
+  &:before
+    background darken($presentation-color, 10%)
+  &:after
+    top 50%
+    background darken($presentation-color, 5%)
+
+// typography
+//-----------
+h1
+  color rgb(110, 138, 228)
+  font-family $font-family-serif
+  font-size 3em
+
+h2
+  font-size 2em
+
+h3
+  font-size 1.5em
+
+h4, h5, h6
+  font-size 1em
+
+h2, h3, h4, h5, h6
+  font-family $font-family-sans
+
+h1, h2, h3, h4, h5, h6
+  font-weight normal
+
+p, li
+  font-size 24px
+  line-height 1.5em
+
+strong
+  font-weight normal
+  color: $accent-color
+
+article
+  font-family $font-family-sans
+
+a
+  color $link-color
+  text-decoration none
+  &:hover
+    text-decoration underline
+
+pre, code
+  font-size 20px
+
+// slide transitions
+//------------------
+.slide
+  overflow hidden
+  .bespoke-slide
+    transform translate3d(0, 0, 0)
+    transition all 0.8s ease
+  .bespoke-before
+    transform translate3d(-100%, 0, 0)
+  .bespoke-after
+    transform translate3d(100%, 0, 0)
+  .bespoke-inactive
+    .bespoke-bullet-inactive
+      transition opacity 0.8s ease
+
+
+.cube
+  overflow hidden
+  perspective $slide-width
+  .bespoke-slide
+    transform-origin 50% 50% (- $slide-width/2)
+    transition all 0.8s ease
+    transform-style preserve-3d
+  .bespoke-inactive
+    opacity 0
+  .bespoke-before
+    transform rotateY(-90deg)
+  .bespoke-after
+    transform rotateY(90deg)
