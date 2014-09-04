@@ -112,10 +112,11 @@ gulp.task('jade', ['clean:jade'], function() {
 gulp.task('connect', ['compile'], function(done) {
   connect.server({
     root: 'demo/dist',
-    livereload: true
+    livereload: true,
+    port: 8081
   });
 
-  opn('http://localhost:8080', done);
+  opn('http://localhost:8081', done);
 });
 
 gulp.task('deploy', ['compile:demo'], function(done) {

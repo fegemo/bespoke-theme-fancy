@@ -9,10 +9,10 @@ var bespoke = require('bespoke'),
 
 bespoke.from('article', [
   fancy(),
+  scale(),
   keys(),
   touch(),
   bullets('li, .bullet'),
-  scale(),
   progress(),
   state()
 ]);
