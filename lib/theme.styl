@@ -188,7 +188,7 @@ $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-
   @page
     margin $print-page-margin
 
-  .slide .bespoke-slide
+  .bespoke-slide
     box-sizing border-box
     display block
     float left
@@ -213,7 +213,7 @@ $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-
       color blue!important
 
 @media print and (orientation: portrait)
-  .slide .bespoke-slide
+  .bespoke-slide
     width $print-portrait-width * .45
     height @width * .75
     margin-right $print-portrait-width * .05
@@ -226,7 +226,7 @@ $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-
     width $print-portrait-width
 
 @media print and (orientation: landscape)
-  .slide .bespoke-slide
+  .bespoke-slide
     width $print-landscape-width * .3
     height @width * .75
     margin-right $print-landscape-width * .03
