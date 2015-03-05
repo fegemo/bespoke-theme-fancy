@@ -5,6 +5,7 @@ var gulp = require('gulp'),
   rename = require('gulp-rename'),
   uglify = require('gulp-uglify'),
   stylus = require('gulp-stylus'),
+  srcmaps = require('gulp-sourcemaps'),
   autoprefixer = require('gulp-autoprefixer'),
   csso = require('gulp-csso'),
   jade = require('gulp-jade'),
@@ -16,7 +17,6 @@ var gulp = require('gulp'),
   through = require('through'),
   path = require('path'),
   ghpages = require('gh-pages'),
-  template = require('lodash').template,
   isDemo = process.argv.indexOf('demo') > 0;
 
 gulp.task('default', ['clean', 'compile']);
@@ -57,12 +57,14 @@ gulp.task('clean:jade', function() {
 gulp.task('stylus', ['clean:stylus'], function() {
   return gulp.src('lib/theme.styl')
     .pipe(isDemo ? plumber() : through())
+    .pipe(srcmaps.init())
     .pipe(stylus({
       'include css': true,
       'paths': ['./node_modules']
     }))
     .pipe(autoprefixer('last 2 versions'))
     .pipe(csso())
+    .pipe(srcmaps.write('.'))
     .pipe(gulp.dest('lib/tmp'));
 });
 
@@ -72,7 +74,7 @@ gulp.task('browserify:lib', ['clean:browserify:lib', 'stylus'], function() {
   return gulp.src('lib/bespoke-theme-fancy.js')
     .pipe(isDemo ? plumber() : through())
     .pipe(browserify({ transform: ['brfs'], standalone: 'bespoke.themes.fancy' }))
-    .pipe(header(template([
+    .pipe(header([
       '/*!',
       ' * <%= name %> v<%= version %>',
       ' *',
@@ -80,15 +82,15 @@ gulp.task('browserify:lib', ['clean:browserify:lib', 'stylus'], function() {
       ' * This content is released under the <%= licenses[0].type %> license',
       ' * <%= licenses[0].url %>',
       ' */\n\n'
-    ].join('\n'), pkg)))
+    ].join('\n'), pkg))
     .pipe(gulp.dest('dist'))
     .pipe(rename('bespoke-theme-fancy.min.js'))
     .pipe(uglify())
-    .pipe(header(template([
+    .pipe(header([
       '/*! <%= name %> v<%= version %> ',
       '© <%= new Date().getFullYear() %> <%= author.name %>, ',
       '<%= licenses[0].type %> License */\n'
-    ].join(''), pkg)))
+    ].join(''), pkg))
     .pipe(gulp.dest('dist'));
 });
 

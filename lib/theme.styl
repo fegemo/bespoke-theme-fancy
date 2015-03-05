@@ -13,151 +13,227 @@ $presentation-color = rgb(215, 215, 250)
 $accent-color = rgb(252, 73, 216)
 $link-color = rgb(182, 108, 126)
 
-.bespoke-parent
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  background-color $presentation-color
+@media screen
 
-.bespoke-scale-parent
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  pointer-events: none
-  .bespoke-active
-    pointer-events: auto
+  .bespoke-parent
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color $presentation-color
 
-.bespoke-slide
-  width: $slide-width
-  height: $slide-height
-  position: absolute
-  overflow: hidden
-  top: 50%
-  left: 50%
-  margin-left: -(@width / 2)
-  margin-top: -(@height / 2)
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
+  .bespoke-scale-parent
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    pointer-events: none
+    .bespoke-active
+      pointer-events: auto
 
-.bespoke-inactive
-  opacity: 0
-  pointer-events: none
+  .bespoke-slide
+    width: $slide-width
+    height: $slide-height
+    position: absolute
+    overflow: hidden
+    top: 50%
+    left: 50%
+    margin-left: -(@width / 2)
+    margin-top: -(@height / 2)
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
 
-.bespoke-bullet
-  opacity 1
-  transform tranlsate3d(0, 0, 0)
-  transition all 0.4s ease
+  .bespoke-inactive
+    opacity: 0
+    pointer-events: none
 
-.bespoke-bullet-inactive
-  opacity: 0
-  pointer-events: none
-  transform translate3d(40px, 0, 0)
-  transition all 0.2s ease
+  .bespoke-bullet
+    opacity 1
+    transform tranlsate3d(0, 0, 0)
+    transition all 0.4s ease
 
-.emphatic
-  background #A6B0FF
-  color white
-  h1, h2, h3, h4, h5, h6
-    color rgb(67, 19, 128)
+  .bespoke-bullet-inactive
+    opacity: 0
+    pointer-events: none
+    transform translate3d(40px, 0, 0)
+    transition all 0.2s ease
 
-.bespoke-progress-parent
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  height: .2vw
+  .emphatic
+    background #A6B0FF
+    color white
+    h1, h2, h3, h4, h5, h6
+      color rgb(67, 19, 128)
 
-.bespoke-progress-bar
-  position absolute
-  height 100%
-  transition width .6s ease
-  &:before
-  &:after
-    content ""
+  .bespoke-progress-parent
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    height: .2vw
+
+  .bespoke-progress-bar
     position absolute
+    height 100%
+    transition width .6s ease
+    &:before
+    &:after
+      content ""
+      position absolute
+      display block
+      width 100%
+      height 50%
+    &:before
+      background darken($presentation-color, 10%)
+    &:after
+      top 50%
+      background darken($presentation-color, 5%)
+
+  // typography
+  //-----------
+  h1
+    color rgb(110, 138, 228)
+    font-family $font-family-serif
+    font-size 3em
+
+  h2
+    font-size 2em
+
+  h3
+    font-size 1.5em
+
+  h4, h5, h6
+    font-size 1em
+
+  h2, h3, h4, h5, h6
+    font-family $font-family-sans
+
+  h1, h2, h3, h4, h5, h6
+    font-weight normal
+
+  p, li
+    font-size 24px
+    line-height 1.5em
+
+  strong
+    font-weight normal
+    color: $accent-color
+
+  article
+    font-family $font-family-sans
+
+  a
+    color $link-color
+    text-decoration none
+    &:hover
+      text-decoration underline
+
+  pre, code
+    font-size 20px
+
+  // slide transitions
+  //------------------
+  .slide
+    overflow hidden
+    .bespoke-slide
+      transform translate3d(0, 0, 0)
+      transition all 0.8s ease
+    .bespoke-before
+      transform translate3d(-100%, 0, 0)
+    .bespoke-after
+      transform translate3d(100%, 0, 0)
+    .bespoke-inactive
+      .bespoke-bullet-inactive
+        transition opacity 0.8s ease
+
+
+  .cube
+    overflow hidden
+    perspective $slide-width
+    .bespoke-slide
+      transform-origin 50% 50% (- $slide-width/2)
+      transition all 0.8s ease
+      transform-style preserve-3d
+    .bespoke-inactive
+      opacity 0
+    .bespoke-before
+      transform rotateY(-90deg)
+    .bespoke-after
+      transform rotateY(90deg)
+
+
+
+$print-body-padding = .1in
+$print-page-margin = .79in
+$print-a4-width = 8.26771654in
+$print-a4-height = 11.6929134in
+
+$print-portrait-width = $print-a4-width - (2*$print-body-padding) - (2*$print-page-margin)
+$print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-page-margin)
+
+@media print
+  *
+    background transparent !important
+    color #000 !important
+    text-shadow none !important
+
+  body
+    margin 0
+    padding $print-body-padding
+    line-height 1.4em
+
+  @page
+    margin $print-page-margin
+
+  .slide .bespoke-slide
+    box-sizing border-box
     display block
-    width 100%
-    height 50%
-  &:before
-    background darken($presentation-color, 10%)
-  &:after
-    top 50%
-    background darken($presentation-color, 5%)
+    float left
+    border 2px solid black
+    text-align center
+    margin-top 0
+    margin-left 0
+    page-break-inside avoid
 
-// typography
-//-----------
-h1
-  color rgb(110, 138, 228)
-  font-family $font-family-serif
-  font-size 3em
+    & > *
+      zoom .65
 
-h2
-  font-size 2em
-
-h3
-  font-size 1.5em
-
-h4, h5, h6
-  font-size 1em
-
-h2, h3, h4, h5, h6
-  font-family $font-family-sans
-
-h1, h2, h3, h4, h5, h6
-  font-weight normal
-
-p, li
-  font-size 24px
-  line-height 1.5em
-
-strong
-  font-weight normal
-  color: $accent-color
-
-article
-  font-family $font-family-sans
-
-a
-  color $link-color
-  text-decoration none
-  &:hover
-    text-decoration underline
-
-pre, code
-  font-size 20px
-
-// slide transitions
-//------------------
-.slide
-  overflow hidden
-  .bespoke-slide
-    transform translate3d(0, 0, 0)
-    transition all 0.8s ease
-  .bespoke-before
-    transform translate3d(-100%, 0, 0)
-  .bespoke-after
-    transform translate3d(100%, 0, 0)
-  .bespoke-inactive
     .bespoke-bullet-inactive
-      transition opacity 0.8s ease
+      opacity 1
+      transform none
+      transition none
 
+    &:nth-child(6n), &:nth-of-type(6n)
+      page-break-after always
+      break-after page
+      text-decoration underline!important
+      color blue!important
 
-.cube
-  overflow hidden
-  perspective $slide-width
-  .bespoke-slide
-    transform-origin 50% 50% (- $slide-width/2)
-    transition all 0.8s ease
-    transform-style preserve-3d
-  .bespoke-inactive
-    opacity 0
-  .bespoke-before
-    transform rotateY(-90deg)
-  .bespoke-after
-    transform rotateY(90deg)
+@media print and (orientation: portrait)
+  .slide .bespoke-slide
+    width $print-portrait-width * .45
+    height @width * .75
+    margin-right $print-portrait-width * .05
+    margin-bottom @margin-right
+
+    &:nth-child(2n)
+      margin-right 0
+
+  .bespoke-parent
+    width $print-portrait-width
+
+@media print and (orientation: landscape)
+  .slide .bespoke-slide
+    width $print-landscape-width * .3
+    height @width * .75
+    margin-right $print-landscape-width * .03
+    margin-bottom @margin-right
+
+    &:nth-child(3n)
+      margin-right 0
+
+  .bespoke-parent
+    width $print-landscape-width
