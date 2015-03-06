@@ -174,16 +174,36 @@ $print-a4-height = 11.6929134in
 $print-portrait-width = $print-a4-width - (2*$print-body-padding) - (2*$print-page-margin)
 $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-page-margin)
 
+$child-zoom = .65
+$grand-child-zoom = .85
+
 @media print
   *
     background transparent !important
     color #000 !important
     text-shadow none !important
 
+  html
+    overflow visible !important
+    height auto !important
+
   body
-    margin 0
-    padding $print-body-padding
-    line-height 1.4em
+    margin 0 !important
+    padding $print-body-padding !important
+    line-height 1em !important
+    overflow visible !important
+    height auto !important
+
+  code
+    line-height 1em
+
+  ul, ol, pre, code
+    text-align left
+
+  pre code
+    border 1px solid dimgray
+    padding 5px
+    border-radius 4px
 
   @page
     margin $print-page-margin
@@ -198,8 +218,31 @@ $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-
     margin-left 0
     page-break-inside avoid
 
+    // direct children of the slide are zoomed .65
     & > *
-      zoom .65
+      zoom $child-zoom
+
+    // grandchildren (and on) are zoomed .65 * .85(pow(depth))
+    & > * *
+      zoom $grand-child-zoom
+
+    // title-only slides are vertically centered: i still need to figure out how to do this
+    /*
+    & > h1:only-child,
+    & > h2:only-child,
+    & > h3:only-child,
+    & > h4:only-child,
+    & > h5:only-child,
+    & > h6:only-child
+      line-height: 7em;
+    */
+    & > h1:only-child,
+    & > h2:only-child,
+    & > h3:only-child,
+    & > h4:only-child,
+    & > h5:only-child,
+    & > h6:only-child
+      margin-top 4em
 
     .bespoke-bullet-inactive
       opacity 1
@@ -209,8 +252,6 @@ $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-
     &:nth-child(6n), &:nth-of-type(6n)
       page-break-after always
       break-after page
-      text-decoration underline!important
-      color blue!important
 
 @media print and (orientation: portrait)
   .bespoke-slide
@@ -225,6 +266,12 @@ $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-
   .bespoke-parent
     width $print-portrait-width
 
+  & > img
+    max-width $print-landscape-width * .45 * (1 / $child-zoom)
+
+  img
+    max-width $print-landscape-width * .45 * (1 / $grand-child-zoom)
+
 @media print and (orientation: landscape)
   .bespoke-slide
     width $print-landscape-width * .3
@@ -237,3 +284,9 @@ $print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-
 
   .bespoke-parent
     width $print-landscape-width
+
+  & > img
+    max-width $print-landscape-width * .3 * (1 / $child-zoom)
+
+  img
+    max-width $print-landscape-width * .3 * (1 / ($grand-child-zoom))
