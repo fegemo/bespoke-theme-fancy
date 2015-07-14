@@ -153,6 +153,8 @@ $link-color = rgb(182, 108, 126)
   .cube
     overflow hidden
     perspective $slide-width
+    .bespoke-scale-parent
+      perspective $slide-width
     .bespoke-slide
       transform-origin 50% 50% (- $slide-width/2)
       transition all 0.8s ease
@@ -195,36 +197,36 @@ $grand-child-zoom = .85
     height auto !important
 
   code
-    line-height 1em
+    line-height 1em !important
 
   ul, ol, pre, code
-    text-align left
+    text-align left !important
 
   pre code
-    border 1px solid dimgray
-    padding 5px
-    border-radius 4px
+    border 1px solid dimgray !important
+    padding 5px !important
+    border-radius 4px !important
 
   @page
-    margin $print-page-margin
+    margin $print-page-margin !important
 
   .bespoke-slide
-    box-sizing border-box
-    display block
-    float left
-    border 2px solid black
-    text-align center
-    margin-top 0
-    margin-left 0
-    page-break-inside avoid
+    box-sizing border-box !important
+    display block !important
+    float left !important
+    border 2px solid black !important
+    text-align center !important
+    margin-top 0 !important
+    margin-left 0 !important
+    page-break-inside avoid !important
 
     // direct children of the slide are zoomed .65
     & > *
-      zoom $child-zoom
+      zoom $child-zoom !important
 
     // grandchildren (and on) are zoomed .65 * .85(pow(depth))
     & > * *
-      zoom $grand-child-zoom
+      zoom $grand-child-zoom !important
 
     // title-only slides are vertically centered: i still need to figure out how to do this
     /*
@@ -242,51 +244,51 @@ $grand-child-zoom = .85
     & > h4:only-child,
     & > h5:only-child,
     & > h6:only-child
-      margin-top 4em
+      margin-top 4em !important
 
     .bespoke-bullet-inactive
-      opacity 1
-      transform none
-      transition none
+      opacity 1 !important
+      transform none !important
+      transition none !important
 
     &:nth-child(6n), &:nth-of-type(6n)
-      page-break-after always
-      break-after page
+      page-break-after always !important
+      break-after page !important
 
 @media print and (orientation: portrait)
   .bespoke-slide
-    width $print-portrait-width * .45
-    height @width * .75
-    margin-right $print-portrait-width * .05
+    width $print-portrait-width * .45 !important
+    height @width * .75 !important
+    margin-right $print-portrait-width * .05 !important
     margin-bottom @margin-right
 
     &:nth-child(2n)
-      margin-right 0
+      margin-right 0 !important
 
   .bespoke-parent
-    width $print-portrait-width
+    width $print-portrait-width !important
 
   & > img
-    max-width $print-landscape-width * .45 * (1 / $child-zoom)
+    max-width $print-landscape-width * .45 * (1 / $child-zoom) !important
 
   img
-    max-width $print-landscape-width * .45 * (1 / $grand-child-zoom)
+    max-width $print-landscape-width * .45 * (1 / $grand-child-zoom) !important
 
 @media print and (orientation: landscape)
   .bespoke-slide
-    width $print-landscape-width * .3
-    height @width * .75
-    margin-right $print-landscape-width * .03
+    width $print-landscape-width * .3 !important
+    height @width * .75 !important
+    margin-right $print-landscape-width * .03 !important
     margin-bottom @margin-right
 
     &:nth-child(3n)
-      margin-right 0
+      margin-right 0 !important
 
   .bespoke-parent
-    width $print-landscape-width
+    width $print-landscape-width !important
 
   & > img
-    max-width $print-landscape-width * .3 * (1 / $child-zoom)
+    max-width $print-landscape-width * .3 * (1 / $child-zoom) !important
 
   img
-    max-width $print-landscape-width * .3 * (1 / ($grand-child-zoom))
+    max-width $print-landscape-width * .3 * (1 / ($grand-child-zoom)) !important
