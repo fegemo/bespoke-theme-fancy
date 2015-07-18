@@ -1,11 +1,11 @@
 {
   "name": "bespoke-theme-fancy",
-  "version": "0.1.1",
+  "version": "0.4.0",
   "main": "./dist/bespoke-theme-fancy.js",
   "ignore": [
     "**/.*"
   ],
   "dependencies": {
-    "bespoke.js": ">=1.0.0-beta"
+    "bespoke.js": ">=1.0.0"
   }
 }
