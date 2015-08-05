@@ -1,7 +1,7 @@
 {
   "name": "bespoke-theme-fancy",
-  "version": "0.4.0",
-  "main": "./dist/bespoke-theme-fancy.js",
+  "version": "0.5.0",
+  "main": "./dist/bespoke-theme-fancy.min.js",
   "ignore": [
     "**/.*"
   ],
