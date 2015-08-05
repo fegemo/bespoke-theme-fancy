@@ -14,7 +14,6 @@ $accent-color = rgb(252, 73, 216)
 $link-color = rgb(182, 108, 126)
 
 @media screen
-
   .bespoke-parent
     position: absolute
     top: 0
@@ -51,46 +50,12 @@ $link-color = rgb(182, 108, 126)
     opacity: 0
     pointer-events: none
 
-  .bespoke-bullet
-    opacity 1
-    transform tranlsate3d(0, 0, 0)
-    transition all 0.4s ease
-
-  .bespoke-bullet-inactive
-    opacity: 0
-    pointer-events: none
-    transform translate3d(40px, 0, 0)
-    transition all 0.2s ease
-
   .emphatic
     background #A6B0FF
     color white
     h1, h2, h3, h4, h5, h6
       color rgb(67, 19, 128)
 
-  .bespoke-progress-parent
-    position: absolute
-    top: 0
-    left: 0
-    right: 0
-    height: .2vw
-
-  .bespoke-progress-bar
-    position absolute
-    height 100%
-    transition width .6s ease
-    &:before
-    &:after
-      content ""
-      position absolute
-      display block
-      width 100%
-      height 50%
-    &:before
-      background darken($presentation-color, 10%)
-    &:after
-      top 50%
-      background darken($presentation-color, 5%)
 
   // typography
   //-----------
@@ -166,173 +131,8 @@ $link-color = rgb(182, 108, 126)
     .bespoke-after
       transform rotateY(90deg)
 
-
-// Overview mode
-$overview-slide-distance = 2000px
-$overview-space-between-slides = $overview-slide-distance / 83.333px
-
-@media screen
-  .bespoke-overview
-    & .bespoke-parent
-      display inline-block
-
-    .bespoke-slide
-      position absolute
-      transform translate3d(0, 0, - $overview-slide-distance)
-      opacity 1
-      border 4px solid silver
-      background-color rgba(white, .2)
-
-      &:hover
-        border-color steelblue
-
-      //& > *
-      //  pointer-events none
-
-      &.bespoke-active
-        border-color steelblue
-
-
-      &.bespoke-inactive.bespoke-before:not(.bespoke-before-1):not(.bespoke-before-2)
-        display flex
-      &.bespoke-inactive.bespoke-after:not(.bespoke-after-1):not(.bespoke-after-2)
-        display flex
-
-
-    .bespoke-bullet-inactive
-      display list-item
-      opacity initial
-      transform initial
-
-    for i in 1..80
-      .bespoke-slide.bespoke-after-{i}
-        transform translate3d(i*($slide-width + $overview-space-between-slides), 0, - $overview-slide-distance)
-      .bespoke-slide.bespoke-before-{i}
-        transform translate3d(i*($slide-width + $overview-space-between-slides)*(-1), 0, - $overview-slide-distance)
-
-
-
-$print-body-padding = .1in
-$print-page-margin = .79in
-$print-a4-width = 8.26771654in
-$print-a4-height = 11.6929134in
-
-$print-portrait-width = $print-a4-width - (2*$print-body-padding) - (2*$print-page-margin)
-$print-landscape-width = $print-a4-height - (2*$print-body-padding) - (2*$print-page-margin)
-
-$child-zoom = .65
-$grand-child-zoom = .85
-
-@media print
-  *
-    background transparent !important
-    color #000 !important
-    text-shadow none !important
-
-  html
-    overflow visible !important
-    height auto !important
-
-  body
-    margin 0 !important
-    padding $print-body-padding !important
-    line-height 1em !important
-    overflow visible !important
-    height auto !important
-
-  code
-    line-height 1em !important
-
-  ul, ol, pre, code
-    text-align left !important
-
-  pre code
-    border 1px solid dimgray !important
-    padding 5px !important
-    border-radius 4px !important
-
-  @page
-    margin $print-page-margin !important
-
-  .bespoke-slide
-    box-sizing border-box !important
-    display block !important
-    float left !important
-    border 2px solid black !important
-    text-align center !important
-    margin-top 0 !important
-    margin-left 0 !important
-    page-break-inside avoid !important
-
-    // direct children of the slide are zoomed .65
-    & > *
-      zoom $child-zoom !important
-
-    // grandchildren (and on) are zoomed .65 * .85(pow(depth))
-    & > * *
-      zoom $grand-child-zoom !important
-
-    // title-only slides are vertically centered: i still need to figure out how to do this
-    /*
-    & > h1:only-child,
-    & > h2:only-child,
-    & > h3:only-child,
-    & > h4:only-child,
-    & > h5:only-child,
-    & > h6:only-child
-      line-height: 7em;
-    */
-    & > h1:only-child,
-    & > h2:only-child,
-    & > h3:only-child,
-    & > h4:only-child,
-    & > h5:only-child,
-    & > h6:only-child
-      margin-top 4em !important
-
-    .bespoke-bullet-inactive
-      opacity 1 !important
-      transform none !important
-      transition none !important
-
-    &:nth-child(6n), &:nth-of-type(6n)
-      page-break-after always !important
-      break-after page !important
-
-@media print and (orientation: portrait)
-  .bespoke-slide
-    width $print-portrait-width * .45 !important
-    height @width * .75 !important
-    margin-right $print-portrait-width * .05 !important
-    margin-bottom @margin-right
-
-    &:nth-child(2n)
-      margin-right 0 !important
-
-  .bespoke-parent
-    width $print-portrait-width !important
-
-  & > img
-    max-width $print-landscape-width * .45 * (1 / $child-zoom) !important
-
-  img
-    max-width $print-landscape-width * .45 * (1 / $grand-child-zoom) !important
-
-@media print and (orientation: landscape)
-  .bespoke-slide
-    width $print-landscape-width * .3 !important
-    height @width * .75 !important
-    margin-right $print-landscape-width * .03 !important
-    margin-bottom @margin-right
-
-    &:nth-child(3n)
-      margin-right 0 !important
-
-  .bespoke-parent
-    width $print-landscape-width !important
-
-  & > img
-    max-width $print-landscape-width * .3 * (1 / $child-zoom) !important
-
-  img
-    max-width $print-landscape-width * .3 * (1 / ($grand-child-zoom)) !important
+@require bespoke-bullets
+@require bespoke-progress
+@require bespoke-overview
+@require bespoke-search
+@require print
