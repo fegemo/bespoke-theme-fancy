@@ -62,7 +62,7 @@ gulp.task('stylus', ['clean:stylus'], function() {
       'include css': true,
       'paths': ['./node_modules']
     }))
-    .pipe(autoprefixer('last 2 versions'))
+    .pipe(autoprefixer({ browsers: ['last 2 versions'] }))
     .pipe(csso())
     .pipe(srcmaps.write('.'))
     .pipe(gulp.dest('lib/tmp'));
