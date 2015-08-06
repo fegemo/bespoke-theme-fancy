@@ -1,5 +1,10 @@
 # bespoke-theme-fancy changelog
 
+## 0.5.1
+
+- styles for deactivating bespoke-bullets if .bespoke-bullet-off is present on the deck parent element
+- updates dependencies to their latest versions
+
 ## 0.5.0
 
 - adds styles for the bespkoe-search plugin, which lets users do a "ctrl+f" to find stuff on the slides
