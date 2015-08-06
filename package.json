@@ -5,9 +5,9 @@
   "homepage": "https://github.com/fegemo/bespoke-theme-fancy",
   "bugs": "https://github.com/fegemo/bespoke-theme-fancy/issues",
   "author": {
+    "email": "fegemo@gmail.com",
     "name": "Flávio Coutinho",
-    "url": "https://github.com/fegemo",
-    "email": "fegemo@gmail.com"
+    "url": "https://github.com/fegemo"
   },
   "main": "./dist/bespoke-theme-fancy.min.js",
   "repository": {
@@ -31,6 +31,7 @@
     "bespoke-touch": "^1.0.0",
     "brfs": "^1.4.0",
     "browserify": "^11.0.1",
+    "del": "^1.2.0",
     "function-bind": "^1.0.2",
     "gh-pages": "^0.3.1",
     "gulp": "^3.9.0",
@@ -50,7 +51,9 @@
     "insert-css": "^0.2.0",
     "normalizecss": "^3.0.0",
     "opn": "^3.0.2",
-    "through": "^2.3.8"
+    "through": "^2.3.8",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "engines": {
     "node": ">=0.10.0"

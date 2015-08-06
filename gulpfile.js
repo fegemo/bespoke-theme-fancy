@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
   gutil = require('gulp-util'),
-  clean = require('gulp-clean'),
+  del = require('del'),
   header = require('gulp-header'),
   rename = require('gulp-rename'),
   uglify = require('gulp-uglify'),
@@ -13,7 +13,9 @@ var gulp = require('gulp'),
   plumber = require('gulp-plumber'),
   opn = require('opn'),
   pkg = require('./package.json'),
-  browserify = require('gulp-browserify'),
+  browserify = require('browserify'),
+  source = require('vinyl-source-stream'),
+  buffer = require('vinyl-buffer'),
   through = require('through'),
   path = require('path'),
   ghpages = require('gh-pages'),
@@ -34,24 +36,20 @@ gulp.task('watch', function() {
 gulp.task('clean', ['clean:browserify', 'clean:stylus', 'clean:jade']);
 gulp.task('clean:browserify', ['clean:browserify:lib', 'clean:browserify:demo']);
 
-gulp.task('clean:browserify:lib', function() {
-  return gulp.src(['dist'], { read: false })
-    .pipe(clean());
+gulp.task('clean:browserify:lib', function(done) {
+  del(['dist'], done);
 });
 
-gulp.task('clean:browserify:demo', function() {
-  return gulp.src(['demo/dist/build'], { read: false })
-    .pipe(clean());
+gulp.task('clean:browserify:demo', function(done) {
+  del(['demo/dist/build'], done);
 });
 
-gulp.task('clean:stylus', function() {
-  return gulp.src(['lib/tmp'], { read: false })
-    .pipe(clean());
+gulp.task('clean:stylus', function(done) {
+  del(['lib/tmp'], done);
 });
 
-gulp.task('clean:jade', function() {
-  return gulp.src(['demo/dist/index.html'], { read: false })
-    .pipe(clean());
+gulp.task('clean:jade', function(done) {
+  del(['demo/dist/index.html'], done);
 });
 
 gulp.task('stylus', ['clean:stylus'], function() {
@@ -71,16 +69,18 @@ gulp.task('stylus', ['clean:stylus'], function() {
 gulp.task('browserify', ['browserify:lib', 'browserify:demo']);
 
 gulp.task('browserify:lib', ['clean:browserify:lib', 'stylus'], function() {
-  return gulp.src('lib/bespoke-theme-fancy.js')
-    .pipe(isDemo ? plumber() : through())
-    .pipe(browserify({ transform: ['brfs'], standalone: 'bespoke.themes.fancy' }))
+  return browserify({ debug: isDemo, standalone: 'bespoke.themes.fancy' })
+    .add('./lib/bespoke-theme-fancy.js')
+    .transform('brfs')
+    .bundle()
+    .pipe(source('bespoke-theme-fancy.js'))
+    .pipe(buffer())
     .pipe(header([
       '/*!',
       ' * <%= name %> v<%= version %>',
       ' *',
       ' * Copyright <%= new Date().getFullYear() %>, <%= author.name %>',
-      ' * This content is released under the <%= licenses[0].type %> license',
-      ' * <%= licenses[0].url %>',
+      ' * This content is released under the <%= license %> license',
       ' */\n\n'
     ].join('\n'), pkg))
     .pipe(gulp.dest('dist'))
@@ -89,16 +89,18 @@ gulp.task('browserify:lib', ['clean:browserify:lib', 'stylus'], function() {
     .pipe(header([
       '/*! <%= name %> v<%= version %> ',
       '© <%= new Date().getFullYear() %> <%= author.name %>, ',
-      '<%= licenses[0].type %> License */\n'
+      '<%= license %> License */\n'
     ].join(''), pkg))
     .pipe(gulp.dest('dist'));
 });
 
 gulp.task('browserify:demo', ['clean:browserify:demo'], function() {
-  return gulp.src('demo/src/scripts/main.js')
-    .pipe(isDemo ? plumber() : through())
-    .pipe(browserify({ transform: ['brfs'] }))
-    .pipe(rename('build.js'))
+  return browserify({ debug: true })
+    .add('./demo/src/scripts/main.js')
+    .transform('brfs')
+    .bundle()
+    .pipe(source('build.js'))
+    .pipe(buffer())
     .pipe(gulp.dest('demo/dist/build'))
     .pipe(connect.reload());
 });
