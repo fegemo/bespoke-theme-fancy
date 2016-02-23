@@ -1,5 +1,10 @@
 # bespoke-theme-fancy changelog
 
+## 0.6.0
+
+- changes support of plugin bespoke-overview to bespoke-simple-overview
+  (its name was changed because a different bespoke-overview was published) 
+
 ## 0.5.1
 
 - styles for deactivating bespoke-bullets if .bespoke-bullet-off is present on the deck parent element
@@ -7,7 +12,7 @@
 
 ## 0.5.0
 
-- adds styles for the bespkoe-search plugin, which lets users do a "ctrl+f" to find stuff on the slides
+- adds styles for the bespoke-search plugin, which lets users do a "ctrl+f" to find stuff on the slides
 
 ## 0.4.0
 
