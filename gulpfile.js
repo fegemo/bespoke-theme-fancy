@@ -36,20 +36,20 @@ gulp.task('watch', function() {
 gulp.task('clean', ['clean:browserify', 'clean:stylus', 'clean:jade']);
 gulp.task('clean:browserify', ['clean:browserify:lib', 'clean:browserify:demo']);
 
-gulp.task('clean:browserify:lib', function(done) {
-  del(['dist'], done);
+gulp.task('clean:browserify:lib', function() {
+  return del(['dist']);
 });
 
-gulp.task('clean:browserify:demo', function(done) {
-  del(['demo/dist/build'], done);
+gulp.task('clean:browserify:demo', function() {
+  return del(['demo/dist/build']);
 });
 
-gulp.task('clean:stylus', function(done) {
-  del(['lib/tmp'], done);
+gulp.task('clean:stylus', function() {
+  return del(['lib/tmp']);
 });
 
-gulp.task('clean:jade', function(done) {
-  del(['demo/dist/index.html'], done);
+gulp.task('clean:jade', function() {
+  return del(['demo/dist/index.html']);
 });
 
 gulp.task('stylus', ['clean:stylus'], function() {
